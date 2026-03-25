@@ -8,150 +8,340 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
-        * {margin:0; padding:0; box-sizing:border-box;}
-        :root {
-            --neon-purple:#b026ff; --neon-blue:#00d9ff; --neon-pink:#ff00ff;
-            --dark-bg:#050508; --card-bg:#0a0a12; --text-primary:#ffffff;
-            --text-secondary:#a0a0b0; --accent-glow:rgba(176,38,255,0.3);
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        body {font-family:'Rajdhani',sans-serif; background:var(--dark-bg); color:var(--text-primary); overflow-x:hidden; line-height:1.6;}
-        .bg-animation {position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1;
-            background: radial-gradient(circle at 20% 50%, rgba(176,38,255,0.15) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, rgba(0,217,255,0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 40% 20%, rgba(255,0,255,0.1) 0%, transparent 50%);
-            animation: bgPulse 8s ease-in-out infinite;}
-        @keyframes bgPulse {0%,100%{opacity:0.5;}50%{opacity:1;}}
 
-        /* Nav */
-        nav {position:fixed; top:0; width:100%; padding:20px 5%; display:flex; justify-content:space-between; align-items:center;
-            background:rgba(5,5,8,0.8); backdrop-filter:blur(20px); border-bottom:1px solid rgba(176,38,255,0.2); z-index:1000;}
-        .logo {font-family:'Orbitron',sans-serif; font-size:1.8rem; font-weight:900;
-            background:linear-gradient(135deg,var(--neon-purple),var(--neon-blue));
-            -webkit-background-clip:text; -webkit-text-fill-color:transparent; text-transform:uppercase; letter-spacing:2px; cursor:pointer; position:relative;}
-        .nav-links {display:flex; gap:30px; list-style:none;}
-        .nav-links a {color:var(--text-secondary); text-decoration:none; font-weight:500; font-size:1.1rem; text-transform:uppercase; letter-spacing:1px; transition:color 0.3s ease;}
-        .nav-links a:hover {color:var(--neon-blue);}
-        .cart-icon {position:relative; cursor:pointer; font-size:1.5rem; transition:transform 0.3s ease;}
-        .cart-icon:hover {transform:scale(1.1); color:var(--neon-purple);}
-        .cart-count {position:absolute; top:-10px; right:-10px; background:var(--neon-pink); color:white; font-size:0.7rem; padding:2px 6px; border-radius:50%; font-weight:700; opacity:0; transform:scale(0); transition:all 0.3s ease;}
-        .cart-count.active {opacity:1; transform:scale(1);}
+        :root {
+            --neon-purple: #b026ff;
+            --neon-blue: #00d9ff;
+            --neon-pink: #ff00ff;
+            --dark-bg: #050508;
+            --card-bg: #0a0a12;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --accent-glow: rgba(176, 38, 255, 0.3);
+        }
 
-        /* Hero */
-        .hero {margin-top:80px; padding:120px 5%; text-align:center; position:relative;}
-        .hero h1 {font-family:'Orbitron',sans-serif; font-size:clamp(2.5rem,8vw,5rem); font-weight:900;
-            background:linear-gradient(135deg,#fff 0%,var(--neon-blue)50%,var(--neon-purple)100%);
-            -webkit-background-clip:text; -webkit-text-fill-color:transparent; text-transform:uppercase; letter-spacing:3px;}
-        .hero p {font-size:1.3rem; color:var(--text-secondary); max-width:600px; margin:0 auto 40px; font-weight:300;}
-        .cta-button {padding:15px 40px; background:linear-gradient(135deg,var(--neon-purple),var(--neon-blue)); color:white; border-radius:50px; font-family:'Orbitron',sans-serif; font-weight:700; text-transform:uppercase; cursor:pointer; border:none; font-size:1rem; transition:transform 0.3s ease, box-shadow 0.3s ease;}
-        .cta-button:hover {transform:translateY(-3px); box-shadow:0 10px 30px rgba(176,38,255,0.4);}
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
 
-        /* Filters */
-        .filters {padding:40px 5%; display:flex; justify-content:center; gap:15px; flex-wrap:wrap;}
-        .filter-btn {padding:12px 30px; background:transparent; border:2px solid rgba(176,38,255,0.3); color:var(--text-secondary); font-weight:700; text-transform:uppercase; cursor:pointer; border-radius:30px; transition:all 0.3s ease; position:relative; overflow:hidden;}
-        .filter-btn:hover, .filter-btn.active {color:white; border-color:transparent; box-shadow:0 0 20px rgba(176,38,255,0.3);}
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(176, 38, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 217, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(255, 0, 255, 0.1) 0%, transparent 50%);
+            animation: bgPulse 8s ease-in-out infinite;
+        }
 
-        /* Products */
-        .products {padding:40px 5%; display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:30px; max-width:1400px; margin:0 auto;}
-        .card {background:var(--card-bg); border-radius:20px; overflow:hidden; border:1px solid rgba(255,255,255,0.05); transition:all 0.4s ease; position:relative;}
-        .card:hover {transform:translateY(-10px); border-color:rgba(176,38,255,0.3); box-shadow:0 20px 40px rgba(0,0,0,0.4),0 0 30px rgba(176,38,255,0.2);}
-        .card-image {position:relative; height:200px; overflow:hidden; cursor:pointer;}
-        .card-image img {width:100%; height:100%; object-fit:cover; transition:transform 0.5s ease;}
-        .card:hover .card-image img {transform:scale(1.1);}
-        .card-content {padding:25px;}
-        .card-category {display:inline-block; padding:5px 15px; background:rgba(176,38,255,0.2); color:var(--neon-purple); font-size:0.8rem; font-weight:700; text-transform:uppercase; border-radius:20px; margin-bottom:10px; border:1px solid rgba(176,38,255,0.3);}
-        .card h3 {font-family:'Orbitron',sans-serif; font-size:1.3rem; margin-bottom:10px;}
-        .card p {color:var(--text-secondary); font-size:0.95rem; margin-bottom:15px;}
-        .card-footer {display:flex; justify-content:space-between; align-items:center; margin-top:20px; padding-top:20px; border-top:1px solid rgba(255,255,255,0.1);}
-        .price {font-family:'Orbitron',sans-serif; font-size:1.5rem; font-weight:700; color:var(--neon-blue); text-shadow:0 0 10px rgba(0,217,255,0.3);}
-        .buy-btn {padding:10px 25px; background:linear-gradient(135deg,var(--neon-purple),var(--neon-pink)); color:white; border:none; border-radius:25px; font-family:'Rajdhani',sans-serif; font-weight:700; cursor:pointer; transition:all 0.3s ease; position:relative; overflow:hidden;}
-        .buy-btn:hover {transform:scale(1.05); box-shadow:0 5px 20px rgba(176,38,255,0.4);}
+        @keyframes bgPulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
 
-        /* WhatsApp Button */
-        .whatsapp-btn {position:fixed; bottom:20px; right:20px; background:linear-gradient(135deg,#00ffcc,#00ff88);
-            color:black; padding:15px 25px; border-radius:50px; font-weight:700; text-decoration:none; font-family:'Orbitron',sans-serif;
-            box-shadow:0 0 15px #00ffcc,0 0 30px #00ff88; transition:all 0.3s ease; z-index:999;}
-        .whatsapp-btn:hover {transform:scale(1.1); box-shadow:0 0 25px #00ffcc,0 0 50px #00ff88;}
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(5, 5, 8, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(176, 38, 255, 0.2);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--neon-purple), var(--neon-blue));
+            transition: width 0.3s ease;
+        }
+
+        .logo:hover::after {
+            width: 100%;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            position: relative;
+            transition: color 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--neon-blue);
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px var(--neon-blue);
+        }
+
+        .nav-links a:hover {
+            color: var(--neon-blue);
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .cart-icon:hover {
+            transform: scale(1.1);
+            color: var(--neon-purple);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: var(--neon-pink);
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 50%;
+            font-weight: 700;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.3s ease;
+        }
+
+        .cart-count.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            padding: 120px 5%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(176, 38, 255, 0.2) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes rotate {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff 0%, var(--neon-blue) 50%, var(--neon-purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 3s infinite;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.3); }
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 40px;
+            font-weight: 300;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-blue));
+            color: white;
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 50px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(176, 38, 255, 0.4);
+        }
+
+        /* Neon Contact Section */
+        .neon-contact {
+            padding: 60px 5%;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .neon-contact h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-blue), var(--neon-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .neon-contact p {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        .neon-contact a {
+            font-weight: 700;
+            text-decoration: underline;
+        }
+
+        .neon-contact .circle {
+            position: absolute;
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .circle-purple {
+            width: 500px;
+            height: 500px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, rgba(176,38,255,0.15) 0%, transparent 70%);
+            animation: rotate 25s linear infinite;
+        }
+
+        .circle-blue {
+            width: 300px;
+            height: 300px;
+            top: 30%;
+            left: 70%;
+            background: radial-gradient(circle, rgba(0,217,255,0.1) 0%, transparent 70%);
+            animation: rotate 30s linear infinite reverse;
+        }
     </style>
 </head>
 <body>
-    <!-- Animated Background -->
     <div class="bg-animation"></div>
 
     <!-- Navigation -->
     <nav>
         <div class="logo">Kaviya AMV</div>
         <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#products">Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Projects</a></li>
+            <li><a href="#">Contact</a></li>
         </ul>
-        <div class="cart-icon">🛒 <span class="cart-count">0</span></div>
+        <div class="cart-icon">🛒<span class="cart-count">0</span></div>
     </nav>
 
-    <!-- Hero -->
-    <section class="hero" id="home">
-        <h1>Premium AMV Projects</h1>
-        <p>High-quality AMV project files for editors. Download, edit, and learn!</p>
-        <button class="cta-button">Browse Projects</button>
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Premium Project Files</h1>
+        <p>Explore high-quality AMV project files for your creative works. Get access instantly.</p>
+        <button class="cta-button">Shop Now</button>
     </section>
 
-    <!-- Filters -->
-    <div class="filters">
-        <button class="filter-btn active" data-filter="all">All</button>
-        <button class="filter-btn" data-filter="free">Free</button>
-        <button class="filter-btn" data-filter="paid">Paid</button>
-        <button class="filter-btn" data-filter="ae">After Effects</button>
-    </div>
-
-    <!-- Products -->
-    <section class="products" id="products">
-        <!-- Sample Card -->
-        <div class="card" data-category="ae paid">
-            <div class="card-image"><img src="https://via.placeholder.com/300x200" alt="Project 1"></div>
-            <div class="card-content">
-                <span class="card-category">AE Project</span>
-                <h3>Giyu Water Style</h3>
-                <p>After Effects project for your AMV edits.</p>
-                <div class="card-footer">
-                    <span class="price">$5</span>
-                    <button class="buy-btn">Buy Now</button>
-                </div>
-            </div>
-        </div>
-        <div class="card" data-category="ae free">
-            <div class="card-image"><img src="https://via.placeholder.com/300x200" alt="Project 2"></div>
-            <div class="card-content">
-                <span class="card-category">Free Project</span>
-                <h3>Zenitsu Thunder</h3>
-                <p>Free AE project file for practice and learning.</p>
-                <div class="card-footer">
-                    <span class="price">Free</span>
-                    <button class="buy-btn">Download</button>
-                </div>
-            </div>
-        </div>
+    <!-- Neon Contact Section -->
+    <section class="neon-contact">
+        <h2>Connect With Me</h2>
+        <p>📱 WhatsApp: <a href="https://wa.me/94766469366" target="_blank">+94 76 646 9366</a></p>
+        <p>▶ Main YouTube Channel: <a href="https://youtube.com/@ytwithkaviya?si=VyrpqmjBIOXH44jH" target="_blank">YTWithKaviya</a></p>
+        <p>▶ Tutorials Channel: <a href="https://youtube.com/@tutorialswithkaviya?si=izWQUpjJmaEBJkVy" target="_blank">TutorialsWithKaviya</a></p>
+        <div class="circle circle-purple"></div>
+        <div class="circle circle-blue"></div>
     </section>
-
-    <!-- WhatsApp Button -->
-    <a href="https://wa.me/9476649366?text=I%20want%20AMV%20project%20file" class="whatsapp-btn" target="_blank">💬 Chat on WhatsApp</a>
-
-    <script>
-        // Filter Function
-        const filterButtons = document.querySelectorAll('.filter-btn');
-        const cards = document.querySelectorAll('.card');
-
-        filterButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                filterButtons.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                const filter = btn.dataset.filter;
-                cards.forEach(card => {
-                    if(filter === 'all' || card.dataset.category.includes(filter)){
-                        card.style.display='block';
-                    } else { card.style.display='none'; }
-                });
-            });
-        });
-    </script>
 </body>
-</html>
+                           </html>
